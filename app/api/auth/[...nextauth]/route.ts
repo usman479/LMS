@@ -63,6 +63,7 @@ const handler = NextAuth ({
         //   console.log('naaa: ', token);
           session.user = token as any;
         //   console.log("stop: ", session)
+        console.log('sesh: ',session.user)
           return session;
         },
         async jwt({ token, user }) {
@@ -71,6 +72,7 @@ const handler = NextAuth ({
         //   }
         //   return token;
         // console.log("how: ", user.data)
+        console.log('toto:', token)
         return {...token,...user}
         },
       },

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
     const accessToken = req.headers.get('authorization');
+
     if (!accessToken || !verifyJwt(accessToken)) {
         return NextResponse.json({
             error: 'unauthorized'
@@ -12,6 +13,8 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
         }
         )
     }
+
+
     const todo = await query({ query: 'select distinct * from todo where id = ?', values: [params.id] })
 
     return NextResponse.json(todo);
