@@ -1,8 +1,6 @@
 'use client'
 import Link from "next/link";
 import React, { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { Toast } from "@/components/ui/toast";
 import {
     Tooltip,
     TooltipContent,
@@ -23,7 +21,7 @@ type Props = {
 
 export default function AssignmentComponent({ assignment }: Props) {
     const [click, clickResult] = useState(false);
-    const { toast } = useToast();
+    // const { toast } = useToast();
     //   let uploadDate: Date = new Date(2023, 5, 18); // May 18, 2023
     //   let dueDate: Date = new Date(2023, 5, 25); // May 18, 2023
     formatDateTime(assignment.due_date)
@@ -60,7 +58,6 @@ export default function AssignmentComponent({ assignment }: Props) {
                                         <p className="hover:underline hover:text-gray-600 ">
                                             Download Assignment
                                         </p>
-                                        <Toast />
                                         <p
                                             className="hover:underline hover:text-gray-600"
                                             onClick={() => clickResult(!click)}

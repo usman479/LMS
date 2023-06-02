@@ -6,8 +6,6 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { Toast } from '@/components/ui/toast'
-import { ToastProvider } from '@/components/ui/toast'
 // import Navbar from '@/components/Navbar'
 // import Providers from '@/components/Providers'
 // import { Context } from '@/lib/context'
@@ -68,35 +66,34 @@ export default function CourseLayout({
     if (status === 'authenticated' && ourData) {
         // console.log(ourData)
         return (
-            <ToastProvider>
             <section>
                 <div className="md:ml-[90px] mx-6 mb-4">
                     <div className="my-4 px-2 pt-2 pb-8 bg-white border-2 shadow-md h-auto flex flex-col items-start">
-                        <p className="text-3xl sm:text-4xl ml-4 font-medium tracking-normal leading-relaxed">
+                        <p className="text-3xl sm:text-4xl ml-4 my-2 font-medium tracking-normal leading-relaxed select-none">
                             {/* {ourData[0].course_name} */}
                         </p>
                         <div className="mt-4 ml-4 flex flex-wrap">
-                            <div className="p-2 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-sm">
+                            <div className="py-2 px-4 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-md">
                                 <Link href={"/"} className="hover:underline">
                                     Dashboard
                                 </Link>
                             </div>
-                            <div className="p-2 bg-slate-100 mr-2 mb-2 lg:mb-0  rounded-sm">
+                            <div className="py-2 px-4 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-md">
                                 <Link href={"/"} className="hover:underline">
                                     My Courses
                                 </Link>
                             </div>
-                            <div className="p-2 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-sm">
+                            <div className="py-2 px-4 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-md">
                                 <Link href={"/"} className="hover:underline">
                                     Spring 2023
                                 </Link>
                             </div>
-                            <div className="p-2 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-sm">
+                            <div className="py-2 px-4 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-md">
                                 <Link href={"/"} className="hover:underline">
                                     Computer Science
                                 </Link>
                             </div>
-                            <div className="p-2 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-sm">
+                            <div className="py-2 px-4 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-md">
                                 <Link href={"/"} className="hover:underline">
                                     CS-2103-CS-222-BS-CS-4C
                                 </Link>
@@ -125,20 +122,11 @@ export default function CourseLayout({
                             </Link>
                         </button>
                         <button
-                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "announcement"
-                                ? "bg-black text-white"
-                                : "bg-slate-200"
-                                }`}
-                            onClick={() => handleButtonClick("button3")}
-                        >
-                            <Link href={{ pathname: "/my/course/announcement", query: { course_id, teacher_id, student_id } }}>Announcement</Link>
-                        </button>
-                        <button
                             className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "assignment"
                                 ? "bg-black text-white"
                                 : "bg-slate-200"
                                 }`}
-                            onClick={() => handleButtonClick("button4")}
+                            onClick={() => handleButtonClick("button3")}
                         >
                             <Link href={{ pathname: "/my/course/assignment", query: { course_id, teacher_id, student_id } }}>Assignment</Link>
                         </button>
@@ -147,9 +135,18 @@ export default function CourseLayout({
                                 ? "bg-black text-white"
                                 : "bg-slate-200"
                                 }`}
-                            onClick={() => handleButtonClick("button5")}
+                            onClick={() => handleButtonClick("button4")}
                         >
                             <Link href={{ pathname: "/my/course/quiz", query: { course_id, teacher_id, student_id } }}>Quiz</Link>
+                        </button>
+                        <button
+                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "announcement"
+                                ? "bg-black text-white"
+                                : "bg-slate-200"
+                                }`}
+                            onClick={() => handleButtonClick("button5")}
+                        >
+                            <Link href={{ pathname: "/my/course/announcement", query: { course_id, teacher_id, student_id } }}>Announcements</Link>
                         </button>
                     </div>
                     <div className="border-2 h-full mt-4 duration-500 p-4">
@@ -170,9 +167,7 @@ export default function CourseLayout({
                     )} */}
                     {/* </div>  */}
                 </div>
-                <Toast/>
             </section>
-            </ToastProvider>
         );
     }
 

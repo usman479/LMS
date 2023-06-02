@@ -70,7 +70,7 @@ export default function Studentpage() {
                 {session.user.s_name}
               </p>
             </div> :
-            <Skeleton className="w-full h-52" />
+            <Skeleton className="w-full h-52 bg-gray-200" />
           }
           <div className="border-2 border-t-2 border-t-black p-4 select-none">
             <p className="p-3 text-lg">Course Overview</p>
@@ -85,8 +85,8 @@ export default function Studentpage() {
                 course_value={'70'}
               />
             )) : <>
-              <Skeleton className="w-full h-36" />
-              <Skeleton className="w-full h-36" />
+              <Skeleton className="w-full h-36 bg-gray-200" />
+              <Skeleton className="w-full h-36 bg-gray-200" />
             </>
             }
           </div>
