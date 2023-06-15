@@ -18,10 +18,11 @@ declare module 'next-auth' {
     interface Session {
         user:{
             s_id:string,
-            s_name:string,
+            name:string,
             accessToken:string,
             p_id:string,
-            semester_num:string
+            semester_num:string,
+            role:string
         }
     }
 }

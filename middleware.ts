@@ -1,8 +1,8 @@
 // import { NextResponse } from "next/server";
 
 // import { NextRequest, NextResponse } from "next/server";
-import { verifyAuth } from "./lib/auth";
-export {default} from 'next-auth/middleware'
+// import { verifyAuth } from "./lib/auth";
+// export {default} from 'next-auth/middleware'
 
 // const allowedOrigins = process.env.NODE_ENV === 'production' ? ['https://www.yoursite.com', 'https://yoursite.com'] :
 //     ['http://localhost:3000', 'https://www.google.com/']
@@ -62,6 +62,25 @@ export {default} from 'next-auth/middleware'
 
 // }
 
+import { withAuth } from 'next-auth/middleware';
+import { NextResponse } from 'next/server';
+
+export default withAuth(
+    function middleware(req){
+        if(req.nextUrl.pathname.startsWith('/teacher') && req.nextauth.token?.role !== 'teacher'){
+            return NextResponse.redirect(new URL('/my',req.url))
+        }
+        if(req.nextUrl.pathname.startsWith('/my') && req.nextauth.token?.role !== 'student'){
+            return NextResponse.redirect( new URL('/teacher',req.url) )
+        }
+    },
+    {
+        callbacks:{
+            authorized:({token}) => !!token,
+        }
+    }
+)
+
 export const config = {
-    matcher: ['/dashboard','/','/my/:path*']
+    matcher: ['/dashboard', '/', '/my/:path*','/teacher/:path*']
 }

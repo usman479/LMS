@@ -1,29 +1,3 @@
-// 'use client'
-// import React, { useEffect, useState } from 'react'
-// import { useSession } from 'next-auth/react'
-// import { getCourses } from '@/lib/getData';
-
-// export default function MY() {
-//     const {data:session,status} = useSession();
-//     const [courses,setCourses] = useState(null);
-//     console.log(status)
-//     useEffect(() => {
-//         if(status === 'authenticated'){
-//             const res = getCourses(session.user.s_id).then(res =>setCourses(res))
-//             // console.log(res)
-//         }
-//         console.log(session?.user.s_id)
-//     },[status])
-
-//     if(status === 'authenticated') {
-//         return <p>{JSON.stringify(courses)}</p>
-//     }
-
-//   return (
-//     <div>LOADING...</div>
-//   )
-// }
-
 "use client";
 import CourseComponent from "./components/CourseComponent";
 import React, { useEffect, useState } from "react";
@@ -33,9 +7,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type CourseType = {
-  course_id: string;
-  course_name: string;
-  t_id: string;
+  course_id: string,
+  course_name: string,
+  t_id: string,
+  semester_num:string,
+  section:string
 };
 
 export default function Studentpage() {
@@ -54,7 +30,6 @@ export default function Studentpage() {
 
   if (status === "authenticated") {
     console.log("course: ", courses);
-
     
   const src =
   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -86,6 +61,8 @@ export default function Studentpage() {
                   course_name={course.course_name}
                   teacher_id={course.t_id}
                   student_id={session.user.s_id}
+                  semester_num={course.semester_num}
+                  section={course.section}
                   course_value={"70"}
                 />
               ))
@@ -102,7 +79,7 @@ export default function Studentpage() {
   }
 
   return (
-    <div>
+    <div className="flex justify-center items-center h-screen">
       <div role="status">
         <svg
           aria-hidden="true"

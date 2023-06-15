@@ -25,16 +25,16 @@ export async function GET(req: NextRequest) {
     }
 
     // console.log("kese: ", jwt.decode(accessToken!)?.s_id, s, typeof s,typeof jwt.decode(accessToken!)?.s_id)
-    if (jwt.decode(accessToken!)?.s_id != Number(s)) {
+    let load:any = jwt.decode(accessToken!);
+    if (load?.s_id != s) {
         return NextResponse.json('your are no eligible to access this page');
     }
 
     const res = await query({
-        query: `select date_of_attendance, attendance_state, t.t_name as teacher_name from mark_attendance m
-        join attendance a on m.a_id = a.a_id
-        join teacher t on t.t_id = m.t_id 
-        where (m.s_id = ? and m.c_id = ? and m.t_id = ? ) order by date_of_attendance asc`,
-        values: [s!, c!, t!]
+        query: `select a.date_of_attendance,m.attendance_state,a.a_id from attendance a 
+        join mark_attendance m on m.a_id = a.a_id and m.s_id = ? and a.c_id = ? 
+        order by a.date_of_attendance desc;`,
+        values: [s!, c!]
     });
 
     // const result = await res.json();

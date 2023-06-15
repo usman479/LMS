@@ -49,7 +49,10 @@ export default  function Home() {
   <>
   <p>HOME</p>
   <p>{session?.user.s_name &&  session.user.s_name}</p>
-  <button onClick={signOut}>signOut</button>
+  <button 
+  // @ts-ignore */
+  onClick={signOut}
+  >signOut</button>
   </>
   )
 }

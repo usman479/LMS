@@ -27,16 +27,18 @@ type Props = {
   course_value: string,
   course_id: string,
   teacher_id: string,
-  student_id: string
+  student_id: string,
+  semester_num: string,
+  section: string
 }
 
-const CourseComponent = ({ course_name, course_value,course_id, teacher_id, student_id }:Props) => {
+const CourseComponent = ({ course_name, course_value, course_id, teacher_id, student_id, semester_num, section }: Props) => {
 
   return (
     <>
       <div className="sm:flex items-center justify-between border-2 bg-slate-100 pt-4 pb-10 px-2 my-1">
         <div className="flex basis-full sm:basis-1/2">
-        <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-full">
             <div
               className={
                 generateGrad() + ` w-20 h-20 rounded-full`
@@ -49,7 +51,8 @@ const CourseComponent = ({ course_name, course_value,course_id, teacher_id, stud
               pathname: '/my/course/assignment',
               query: { course_id, teacher_id, student_id }
             }}>
-            <p className="text-base sm:text-xl">{course_name} (BS-CS-4C)</p></Link>
+              <p className="text-base sm:text-xl">{`${course_name} (${semester_num}${section})`}</p>
+            </Link>
           </span>
         </div>
 

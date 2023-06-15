@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from 'next/navigation';
 import { useSession } from "next-auth/react";
-import AssignmentComponent from "./components/Assigns";
+import AssignmentComponent from "./components/AssignmentPage";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+// import AssignmentPage from "@/components/AssignmentPage";
 
 type Assign = {
     assignment: {
@@ -49,6 +50,7 @@ export default function Assignment() {
                         <h2 className="text-3xl font-medium select-none">Assignments</h2>
                         <ul>
                             {assignments.length > 0 ? assignments.map((assignment: Assign, index: number) => {
+                                // @ts-ignore
                                 return <AssignmentComponent assignment={assignment} key={index} />
                             }) : 'NO ASSIGNMENTS'}
                         </ul>

@@ -23,22 +23,22 @@ export async function GET(req: NextRequest) {
     if(!t && !c && !s){
         return NextResponse.json('Invalid parameters')
     }
-
+    // console.log('st_id: ', jwt.decode(accessToken!)?.s_id);
     // console.log("kese: ", jwt.decode(accessToken!)?.s_id, s, typeof s,typeof jwt.decode(accessToken!)?.s_id)
-    if(jwt.decode(accessToken!)?.s_id != Number(s)){
+    let load:any = jwt.decode(accessToken!);
+    if(load?.s_id != s){
         return NextResponse.json('your are no eligible to access this page');
     }
 
     const res = await query({
-        query: `select a.at_id as assignment_id, a.as_desc as assignment_description, a.ass_upload_date as upload_date, a.ass_due_date as due_date, t.t_name as teacher_name, c.c_title as course_name 
-     from assignment a
-     join teacher t on t.t_id = a.t_id
-     join course c on c.c_id = a.c_id
-     where t.t_id = ? and c.c_id = ? order by a.ass_due_date desc; `,
+        query: `select a.at_id as assignment_id, a.at_desc as assignment_description, a.at_upload_date as upload_date, a.at_due_date as due_date, t.t_name as teacher_name, c.c_title as course_name 
+        from course c join teacher t on t.t_id = c.t_id
+        join assignment a on c.c_id = a.c_id where t.t_id = ? and c.c_id = ? order by a.at_due_date desc; `,
         values: [t!, c!]
     });
 
     // const result = await res.json();
     // console.log("yours: ", res)
+    console.log('haaan: ', res)
     return NextResponse.json(res);
 }

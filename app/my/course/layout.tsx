@@ -36,16 +36,11 @@ export default function CourseLayout({
     console.log(status)
     const [activeButton, setActiveButton] = useState<string>();
     const [ourData, setOurData] = useState();
-    const [at, setAt] = useState(false);
-    const handleButtonClick = (buttonName: string) => {
-        setActiveButton(buttonName);
-    };
 
     useEffect(() => {
-        const  pa = pathName.split(/[/]/);
-        // console.log('path name: ', pa[3])
+        const pa = pathName.split(/[/]/);
         setActiveButton(prev => pa[3])
-    },[pathName])
+    }, [pathName])
 
     useEffect(() => {
         // console.log('saad: ', status);
@@ -101,82 +96,64 @@ export default function CourseLayout({
                         </div>
                     </div>
                     <div className="border-2 border-t-2 border-t-black p-2 flex flex-wrap">
-                        <button
-                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "material"
-                                ? "bg-black text-white"
-                                : "bg-slate-200"
-                                }`}
-                            onClick={() => handleButtonClick("button1")}
-                        >
-                            <Link href={{ pathname: "/my/course/material", query: { course_id, teacher_id, student_id } }}>Lecture Slides</Link>
-                        </button>
-                        <button
-                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "attendance"
-                                ? "bg-black text-white"
-                                : "bg-slate-200"
-                                }`}
-                            onClick={() => handleButtonClick("button2")}
-                        >
-                            <Link href={{ pathname: "/my/course/attendance", query: { course_id, teacher_id, student_id } }} onClick={() => setAt(!at)}>
+                        <Link href={{ pathname: "/my/course/material", query: { course_id, student_id,teacher_id } }} className='flex flex-grow'>
+                            <button
+                                className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "material"
+                                    ? "bg-black text-white"
+                                    : "bg-slate-200"
+                                    }`}
+                            >
+                                Lecture Slides
+                            </button>
+                        </Link>
+                        <Link href={{ pathname: "/my/course/attendance", query: { course_id, teacher_id, student_id } }} className='flex flex-grow'>
+                            <button
+                                className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "attendance"
+                                    ? "bg-black text-white"
+                                    : "bg-slate-200"
+                                    }`}
+                            >
+
                                 Attendance
-                            </Link>
-                        </button>
-                        <button
-                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "assignment"
-                                ? "bg-black text-white"
-                                : "bg-slate-200"
-                                }`}
-                            onClick={() => handleButtonClick("button3")}
-                        >
-                            <Link href={{ pathname: "/my/course/assignment", query: { course_id, teacher_id, student_id } }}>Assignment</Link>
-                        </button>
-                        <button
-                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "quiz"
-                                ? "bg-black text-white"
-                                : "bg-slate-200"
-                                }`}
-                            onClick={() => handleButtonClick("button4")}
-                        >
-                            <Link href={{ pathname: "/my/course/quiz", query: { course_id, teacher_id, student_id } }}>Quiz</Link>
-                        </button>
-                        <button
-                            className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "announcement"
-                                ? "bg-black text-white"
-                                : "bg-slate-200"
-                                }`}
-                            onClick={() => handleButtonClick("button5")}
-                        >
-                            <Link href={{ pathname: "/my/course/announcement", query: { course_id, teacher_id, student_id } }}>Announcements</Link>
-                        </button>
+
+                            </button>
+                        </Link>
+                        <Link href={{ pathname: "/my/course/assignment", query: { course_id, teacher_id, student_id } }} className='flex flex-grow'>
+                            <button
+                                className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "assignment"
+                                    ? "bg-black text-white"
+                                    : "bg-slate-200"
+                                    }`}
+                            >
+                                Assignment
+                            </button>
+                        </Link>
+                        <Link href={{ pathname: "/my/course/quiz", query: { course_id, teacher_id, student_id } }} className='flex flex-grow'>
+                            <button
+                                className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "quiz"
+                                    ? "bg-black text-white"
+                                    : "bg-slate-200"
+                                    }`}
+                            >
+                                Quiz
+                            </button>
+                        </Link>
+                        <Link href={{ pathname: "/my/course/announcement", query: { course_id, student_id,teacher_id } }} className='flex flex-grow'>
+                            <button
+                                className={`py-2 px-4 rounded-md shadow-lg m-4 text-center flex-grow ${activeButton === "announcement"
+                                    ? "bg-black text-white"
+                                    : "bg-slate-200"
+                                    }`}
+                            >
+                                Announcements
+                            </button>
+                        </Link>
                     </div>
                     <div className="border-2 h-full mt-4 duration-500 p-4">
                         {children}
                     </div>
-                    {/* {activeButton === "button1" ? (
-          <LectureSlide />
-      ) : activeButton === "button2" ? (
-          <Attendance />
-      ) : activeButton === "button3" ? (
-        <Announcement />
-        ) : activeButton === "button4" ? (
-            <Assignment />
-            ) : activeButton === "button5" ? (
-                <Quiz />
-                ) : (
-                    <LectureSlide />
-                    )} */}
-                    {/* </div>  */}
                 </div>
             </section>
         );
     }
-
-    // return (
-    //     <html lang="en">
-    //         <body className={inter.className}>
-    //             <p>LOADING...</p>
-    //             {children}
-    //         </body>
-    //     </html>
-    // )
 }

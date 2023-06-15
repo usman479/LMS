@@ -6,6 +6,7 @@ const API_KEY: string = process.env.DATA_API_KEY as string;
 export async function GET(request:Request) {
     const origin = request.headers.get('origin');
     const res = await fetch(DATA_SOURCE_URL);
+    // @ts-ignore
     const data: Todo[] = await res.json();
 
     console.log("there: ",origin)
@@ -18,6 +19,7 @@ export async function GET(request:Request) {
 }
 
 export async function DELETE(request: NextRequest) {
+    // @ts-ignore
     const { id }: Partial<Todo> = await request.json();
     console.log("id: " + id)
     if (!id) return NextResponse.json({ "message": "Todo id required" });
@@ -34,6 +36,7 @@ export async function DELETE(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+    // @ts-ignore
     const { userId, title }: Todo = await request.json();
     if (!userId || !title) return NextResponse.json({ "message": "missing required data" });
 
@@ -45,13 +48,14 @@ export async function POST(request: NextRequest) {
         },
         body: JSON.stringify({ userId, title, completed: false })
     })
-
+    // @ts-ignore
     const newTodo: Todo = await res.json();
 
     return NextResponse.json(newTodo);
 }
 
 export async function PUT(request: NextRequest) {
+    // @ts-ignore
     const { userId, title, id, completed }: Todo = await request.json();
     if (!userId || !title || !id || typeof (completed) !== 'boolean') return NextResponse.json({ "message": "missing required data" });
 
@@ -63,7 +67,7 @@ export async function PUT(request: NextRequest) {
         },
         body: JSON.stringify({ userId, title, completed: false })
     })
-
+    // @ts-ignore
     const updatedTodo: Todo = await res.json();
 
     return NextResponse.json(updatedTodo);

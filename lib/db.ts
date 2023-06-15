@@ -5,7 +5,7 @@ export async function query({query,values=[]}:{query:string,values:string[]}){
         host:'localhost',
         user:'root',
         password:'root',
-        database:'lms'
+        database:'lms3'
     })
 
     try {

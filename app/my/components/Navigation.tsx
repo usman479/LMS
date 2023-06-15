@@ -2,6 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const Navigation = () => {
   const [open, setOpen] = useState(false);
@@ -29,12 +30,13 @@ const Navigation = () => {
             />
           </svg>
         </div>
-        <h1 className="font-bold text-3xl ml-10 hidden md:block cursor-pointer select-none">Learn&Grow Non-PTA LMS</h1>
+        <Link href={"/my"}> <h1 className="font-bold text-3xl ml-10 hidden md:block cursor-pointer select-none">Learn&Grow</h1></Link>
         <div
           className={ (open ? `w-20 md:w-64` : `w-0 md:w-20`) +
               ` fixed left-0 top-[82px] h-full bg-white duration-500 shadow-2xl`}
         >
           <ul className="cursor-pointer select-none">
+            <Link href={{pathname:'my'}}>
             <li
               className={(open ? `px-6` : `justify-center px-2 ml-2`) + ` flex items-center py-4 bg-white`}
             >
@@ -54,6 +56,8 @@ const Navigation = () => {
               </svg>
               {open && screen.width > 768 ? "Dashboard" : ""}
             </li>
+            </Link>
+            <Link href={{pathname:'/my'}}>
             <li
               className={(open ? `px-6` : `justify-center px-2 ml-2`) + ` flex items-center py-4 bg-white`}
             >
@@ -73,25 +77,9 @@ const Navigation = () => {
               </svg>
               {open && screen.width > 768 ? "Home" : ""}
             </li>
-            <li
-              className={(open ? `px-6` : `justify-center px-2 ml-2`) + ` flex items-center py-4 bg-white`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 md:mr-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
-                />
-              </svg>
-              {open && screen.width > 768 ? "Calender" : ""}
-            </li>
+            </Link>
+            
+            <Link href={{pathname:'/my'}}>
             <li
               className={(open ? `px-6` : `justify-center px-2 ml-2`) + ` flex items-center py-4 bg-white`}
             >
@@ -111,25 +99,7 @@ const Navigation = () => {
               </svg>
               {open && screen.width > 768 ? "My Courses" : ""}
             </li>
-            <li
-              className={(open ? `px-6` : `justify-center px-2 ml-2`) + ` flex items-center py-4 bg-white`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 md:mr-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                />
-              </svg>
-              {open && screen.width > 768 ? "Course I" : ""}
-            </li>
+            </Link>
             <li
               className={(open ? `px-6` : `justify-center px-2 ml-2`) + ` flex items-center py-4 bg-white`}
             >
@@ -156,7 +126,7 @@ const Navigation = () => {
       <div className="flex items-center justify-between group py-2 cursor-pointer">
         {/*add avatar from shadcn*/}
         <img
-          src="https://lms.dsu.edu.pk/pluginfile.php/94497/user/icon/moove/f1?rev=3003270"
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
           className="w-14 h-14 rounded-full mr-4 select-none"
           alt="profile_picture"
         />
@@ -182,6 +152,7 @@ const Navigation = () => {
               </svg>
               <p>{status === 'authenticated' ? session.user.s_name : 'Loading...'}</p>
             </li>
+            <Link href={{pathname:'/my'}}>
             <li className="flex items-center py-2 px-4 hover:bg-gray-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -199,6 +170,7 @@ const Navigation = () => {
               </svg>
               <p>Dashboard</p>
             </li>
+            </Link>
             <li className="flex items-center py-2 px-4 hover:bg-gray-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

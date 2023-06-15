@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     // console.log('Token: ', accessToken);
     // console.log("payload: ", JSON.stringify(jwt.decode(accessToken!)));
 
-    const res = await query({ query: 'select c.c_id course_id,c.c_title as course_name,e.t_id from enroll_assign e join course c on e.c_id = c.c_id where e.s_id = ?', values: [s_id] });
+    const res = await query({ query: 'select c.c_id course_id,c.c_title as course_name,c.t_id,c.semester_num,c.section from enroll_assign e join course c on e.c_id = c.c_id where e.s_id = ?', values: [s_id] });
     // const origin = request.headers.get('origin');
     // const res = await fetch(DATA_SOURCE_URL);
     // const data: Todo[] = await res.json();

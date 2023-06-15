@@ -56,10 +56,11 @@ const handler = NextAuth ({
         maxAge: 30 * 24 * 60 * 60,
       },
       jwt: {
+        // @ts-ignore
         signingKey: process.env.SECRET_KEY!,
       },
       callbacks: {
-        async session({ session, token }) {
+        async session({ session, token, user }) {
         //   console.log('naaa: ', token);
           session.user = token as any;
         //   console.log("stop: ", session)
@@ -72,7 +73,6 @@ const handler = NextAuth ({
         //   }
         //   return token;
         // console.log("how: ", user.data)
-        console.log('toto:', token)
         return {...token,...user}
         },
       },
