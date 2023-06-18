@@ -55,7 +55,6 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
 
     return (
         <>
-
             <li className="border-t-2 border-black my-2 py-4">
                 <div className="sm:flex items-center justify-between border-2 bg-slate-100 pt-4 pb-10 px-5 my-1">
                     <div className="flex basis-full">
@@ -68,9 +67,6 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                                     </p>
                                 </div>
                                 <div className="flex items-center gap-x-2 self-start order-last mt-2 lg:mt-0">
-
-
-
                                     <>
                                         <Tooltip>
                                             <button
@@ -86,9 +82,7 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                                                 </TooltipContent>
                                             </button>
                                         </Tooltip>
-
                                     </>
-
                                 </div>
                             </div>
 
@@ -129,7 +123,6 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                     </div>
                 </div>
             </li>
-
         </>
     );
 }

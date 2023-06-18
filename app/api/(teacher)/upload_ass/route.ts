@@ -31,3 +31,25 @@ export async function POST(request: NextRequest) {
     //     }
     // });
 }
+
+export async function DELETE(req:NextRequest){
+
+    const {searchParams} = new URL(req.url);
+    const {at_id} = {at_id:searchParams.get('at_id')};
+
+    try{
+        const res = await query({
+            query:'delete from assignment where at_id = ?',
+            values:[at_id!]
+        })
+        
+        return NextResponse.json(true)
+    } catch(e){
+        return NextResponse.json(false);
+    }
+
+
+
+
+
+}
