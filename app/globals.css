@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
  
+
+.ut-bg-blue-600 {
+  /* background-color: black !important
+  ; */
+  --tw-bg-opacity: 1 !important;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity)) !important;
+    /* align-self: flex-start !important; */
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;

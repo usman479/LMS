@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
     }
 
     const res = await query({
-        query: `select m_desc description,m_upload_date upload_date from course_material where c_id = ?;`,
+        query: `select m_topic topic,m_file file,m_desc description,m_upload_date upload_date from course_material where c_id = ?;`,
         values: [c!]
     });
 

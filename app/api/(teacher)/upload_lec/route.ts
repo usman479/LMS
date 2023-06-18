@@ -7,14 +7,15 @@ export async function POST(request: NextRequest) {
 
     // console.log('name: ',session?.user.s_name);
 
-    const {topic,desc,selectedCourse } = await request.json();
+    const {topic,desc,selectedCourse,fileLink } = await request.json();
+    console.log('second: ', topic,desc,selectedCourse,fileLink )
     // const accessToken = request.headers.get('authorization');
     // console.log('Token: ', accessToken);
     // console.log("payload: ", JSON.stringify(jwt.decode(accessToken!)));
     for(let i=0; i<selectedCourse.length; i++){
         try{
-            const res = await query({ query: `insert into course_material (m_topic, m_desc, m_upload_date, c_id) values
-            (?, ?, current_timestamp(), ?);`, values: [topic,desc,selectedCourse[i]]});
+            const res = await query({ query: `insert into course_material (m_topic, m_desc, m_upload_date, c_id,m_file) values
+            (?, ?, current_timestamp(), ?,?);`, values: [topic,desc,selectedCourse[i],fileLink]});
         } catch(e){
             return NextResponse.json(false)
         }

@@ -16,6 +16,8 @@ type Props = {
         due_date: string,
         teacher_name: string,
         upload_date: string,
+        file:string,
+        topic:string
     }
 }
 
@@ -35,7 +37,7 @@ export default function AssignmentComponent({ assignment }: Props) {
                             <div className="flex lg:flex-row flex-col justify-between select-none w-full">
                                 <div className="basis-1/2">
                                     <p className="text-2xl font-medium">
-                                        Assignment no.{assignment.assignment_id}
+                                       {assignment.topic}
                                     </p>
                                     <p className="text-sm lg:text-base mt-2">
                                         {assignment.assignment_description}
@@ -55,9 +57,9 @@ export default function AssignmentComponent({ assignment }: Props) {
                                                 Due:  {formatDateTime(assignment.due_date)}
                                             </TooltipContent>
                                         </button>
-                                        <p className="hover:underline hover:text-gray-600 ">
+                                        {assignment.file &&  <Link href={assignment.file} target="_blank" className="hover:underline hover:text-gray-600 ">
                                             Download Assignment
-                                        </p>
+                                        </Link>}
                                         <p
                                             className="hover:underline hover:text-gray-600"
                                             onClick={() => clickResult(!click)}

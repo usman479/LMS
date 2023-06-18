@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import QuizComponent from "../../../teacher/course/quiz/components/QuizComponent";
+import Quizzes from './components/Quizzes'
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -45,7 +45,7 @@ export default function Quiz() {
             <ul>
               {typeof quizzes != 'string' && quizzes.length > 0 ?
                 quizzes.map(quiz => {
-                  return <QuizComponent marks_obtained={quiz.marks_obtained} total_marks={quiz.total_marks} attempt={quiz.attempt} q_id={quiz.q_id} q_topic={quiz.q_topic} q_desc={quiz.q_desc} q_upload_date={quiz.q_upload_date} q_due_date={quiz.q_due_date} q_time={quiz.q_time}/>
+                  return <Quizzes key={quiz.q_id} q_id={quiz.q_id} q_topic={quiz.q_topic} q_desc={quiz.q_desc} q_upload_date={quiz.q_upload_date} q_due_date={quiz.q_due_date} q_time={quiz.q_time} marks_obtained={quiz.marks_obtained} total_marks={quiz.total_marks} attempt={quiz.attempt}/>
                 })
                 :
                 'No Quiz!'

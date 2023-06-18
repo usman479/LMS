@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Store } from "../layout";
 
 const Navigation = () => {
   const [open, setOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session, status,update } = useSession();
+  const src = session?.user.s_image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
+  
   return (
     <header className="flex items-center justify-between px-6 py-2 border-b-2 shadow-md sticky top-0 z-50 bg-white">
       <div className="flex items-center py-2">
@@ -124,12 +129,11 @@ const Navigation = () => {
         </div>
       </div>
       <div className="flex items-center justify-between group py-2 cursor-pointer">
-        {/*add avatar from shadcn*/}
-        <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-          className="w-14 h-14 rounded-full mr-4 select-none"
-          alt="profile_picture"
-        />
+        {<Avatar className="w-14 h-14 mr-4 select-none">
+          <AvatarImage src={status === 'authenticated' ? session.user.s_image  || src : src} className="object-cover object-center"/>
+          <AvatarFallback>Profile Picture</AvatarFallback>
+        </Avatar>
+        }
         <div className="sm:min-w-0 absolute right-6 top-[72px]">
           <ul
             className="flex flex-col group-hover:border-2 border-gray-300 group-hover:max-h-max max-h-0 overflow-hidden 
@@ -171,6 +175,7 @@ const Navigation = () => {
               <p>Dashboard</p>
             </li>
             </Link>
+            <Link href={'/my/profile'}>
             <li className="flex items-center py-2 px-4 hover:bg-gray-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -188,6 +193,7 @@ const Navigation = () => {
               </svg>
               <p>Profile</p>
             </li>
+              </Link>
             <li className="flex items-center py-2 px-4 hover:bg-gray-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

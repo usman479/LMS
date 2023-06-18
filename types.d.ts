@@ -22,7 +22,8 @@ declare module 'next-auth' {
             accessToken:string,
             p_id:string,
             semester_num:string,
-            role:string
+            role:string,
+            s_image:string
         }
     }
 }

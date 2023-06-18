@@ -18,41 +18,7 @@ let answers: string[] = [];
 
 export default function QuizPage() {
   const router = useRouter();
-  // const questions = [
-  //   {
-  //     question: "What is linear transformation?",
-  //     opt: [
-  //       "A function that maps vectors from one vector space to another while preserving vector addition and scalar multiplication.",
-  //       "A function that maps vectors from one vector space to another, but it does not preserve vector addition and scalar multiplication.",
-  //       "A function that maps vectors only within the same vector space.",
-  //       "A function that maps vectors from one vector space to another by applying non-linear operations.",
-  //     ],
-  //     correctOpt: [
-  //       "A function that maps vectors from one vector space to another while preserving vector addition and scalar multiplication.",
-  //     ],
-  //   },
-  //   {
-  //     question: "Which of the following operations are valid for matrices?",
-  //     opt: [
-  //       "Matrix addition",
-  //       "Matrix division",
-  //       "Matrix exponentiation",
-  //       "Matrix multiplication",
-  //     ],
-  //     correctOpt: ["Matrix addition", "Matrix multiplication"],
-  //   },
-  //   {
-  //     question:
-  //       "Which of the following operations are valid in Linear Algebra?",
-  //     opt: [
-  //       "Multiplying a vector by a scalar.",
-  //       "Taking the derivative of a matrix",
-  //       "Finding the maximum value in a vector",
-  //       "Converting a matrix to a string",
-  //     ],
-  //     correctOpt: ["Multiplying a vector by a scalar"],
-  //   },
-  // ];
+ 
 
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
@@ -187,6 +153,7 @@ export default function QuizPage() {
             <button
               type="button"
               className={`bg-gray-900 hover:bg-gray-900 hover:scale-110 hover:duration-200 text-white w-24 font-medium rounded-lg text-sm px-4 py-2 mx-2`}
+              onClick={handleOpenModal}
             >
               <div role="status" className={submitting ? "block" : "hidden"}>
                 <svg aria-hidden="true" className="w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -227,7 +194,7 @@ export default function QuizPage() {
                 >
                   <div className="flex items-center pl-3">
                     <input
-                      id="vue-checkbox"
+                      id="q1"
                       type="radio"
                       name='option'
                       value="0"
@@ -235,7 +202,7 @@ export default function QuizPage() {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
-                      htmlFor="vue-checkbox"
+                      htmlFor="q1"
                       className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
                       {questions[currentQuestionIndex].ques_opt_A}
@@ -249,7 +216,7 @@ export default function QuizPage() {
                 >
                   <div className="flex items-center pl-3">
                     <input
-                      id="vue-checkbox"
+                      id="q2"
                       type="radio"
                       name='option'
                       value="1"
@@ -257,7 +224,7 @@ export default function QuizPage() {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
-                      htmlFor="vue-checkbox"
+                      htmlFor="q2"
                       className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
                       {questions[currentQuestionIndex].ques_opt_B}
@@ -271,7 +238,7 @@ export default function QuizPage() {
                 >
                   <div className="flex items-center pl-3">
                     <input
-                      id="vue-checkbox"
+                      id="q3"
                       type="radio"
                       name='option'
                       value="2"
@@ -279,7 +246,7 @@ export default function QuizPage() {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
-                      htmlFor="vue-checkbox"
+                      htmlFor="q3"
                       className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
                       {questions[currentQuestionIndex].ques_opt_C}
@@ -293,7 +260,7 @@ export default function QuizPage() {
                 >
                   <div className="flex items-center pl-3">
                     <input
-                      id="vue-checkbox"
+                      id="q4"
                       type="radio"
                       name='option'
                       value="3"
@@ -301,7 +268,7 @@ export default function QuizPage() {
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                     />
                     <label
-                      htmlFor="vue-checkbox"
+                      htmlFor="q4"
                       className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
                       {questions[currentQuestionIndex].ques_opt_D}
@@ -339,7 +306,7 @@ export default function QuizPage() {
                 (currentQuestionIndex !== questions.length - 1
                   ? `bg-gray-900 hover:bg-gray-900 hover:scale-110 hover:duration-200`
                   : `bg-gray-400 cursor-not-allowed hidden`) +
-                (isTimeUp
+                (isTimeUp || isModalOpen
                   ? ` opacity-50 pointer-events-none `
                   : ` opacity-100 `) +
                 ` text-white w-24 font-medium rounded-lg text-sm px-4 py-2 mx-2`
@@ -362,7 +329,13 @@ export default function QuizPage() {
                 >
                   Submit
                 </button>
-                {isModalOpen && (
+                
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          {isModalOpen && (
                   <div
                     id="popup-modal"
                     className={`flex items-center justify-center fixed top-0 left-[10%] right-[10%] lg:left-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
@@ -409,11 +382,6 @@ export default function QuizPage() {
                     </div>
                   </div>
                 )}
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
         </div>
         {isTimeUp && (
           <div

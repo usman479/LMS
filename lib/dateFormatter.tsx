@@ -10,6 +10,12 @@ export const formatDateTime = (dateTime:string) => {
 
 }
 
+export function compareDate(date:string){
+  const da = new Date(date);
+  const currentDate = new Date();
+  return da.getTime() < currentDate.getTime();
+}
+
 function tConvert (time:string) {
     // Check correct time format and split into components
     // @ts-ignore

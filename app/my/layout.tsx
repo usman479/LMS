@@ -6,6 +6,9 @@ import Providers from '@/components/Providers'
 // import { Context } from '@/lib/context'
 // import { useSession } from 'next-auth/react'
 import Navigation from './components/Navigation'
+import { createContext, useEffect, useState } from 'react'
+import { useSession } from 'next-auth/react'
+
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,21 +24,24 @@ export default function MyLayout({
   children: React.ReactNode
 }) {
 
-  
 
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        {/* <Providers> */}
-        {/* <Context.Provider value={session?.user}> */}
-          {/* <Navbar/> */}
 
-          <Navigation/>
-          {children}
-          
+
+return (
+  <html lang="en">
+    <body className={inter.className}>
+      {/* <Providers> */}
+      {/* <Context.Provider value={session?.user}> */}
+      {/* <Navbar/> */}
+ 
+
+        <Navigation />
+        {children}
+     
+
       {/* </Context.Provider> */}
-        {/* </Providers> */}
-      </body>
-    </html>
-  )
+      {/* </Providers> */}
+    </body>
+  </html>
+)
 }

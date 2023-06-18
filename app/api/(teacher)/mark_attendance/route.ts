@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
     
     myQuery =  myQuery.slice(0,myQuery.length-1);
-
+    console.log('query: ', myQuery)
     const res = await query({
         query: myQuery, values: []
     });

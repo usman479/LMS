@@ -40,7 +40,7 @@ export default function Studentpage() {
           {complete ? (
             <div className="my-4 p-4 bg-white border-2 shadow-md h-52 flex flex-col sm:flex-row items-start">
               <Avatar className="w-28 h-28 select-none">
-                <AvatarImage src={src} />
+                <AvatarImage src={status === 'authenticated' ? session.user.s_image || src : src}  className="object-center object-cover"/>
                 <AvatarFallback>Profile Picture</AvatarFallback>
               </Avatar>
               <p className="text-3xl sm:text-4xl sm:ml-4 font-medium tracking-normal leading-relaxed select-none">

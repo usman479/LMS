@@ -7,7 +7,9 @@ import Material from "./components/Material";
 
 type LectureType = {
   description:string,
-  upload_date:string
+  upload_date:string,
+  m_file:string,
+  topic:string
 }
 
 export default function LectureSlide() {
@@ -34,7 +36,7 @@ export default function LectureSlide() {
           <h2 className="text-3xl font-medium">Lectures</h2>
           <ul>
           {typeof lectures != 'string' && lectures.length > 0 ? lectures.map(lecture => {
-          return <Material description={lecture.description} uploadDate={lecture.upload_date} />
+          return <Material topic={lecture.topic} file={lecture.m_file} description={lecture.description} uploadDate={lecture.upload_date} />
         }) : 'No Course Materials'}
           </ul>
         </div>

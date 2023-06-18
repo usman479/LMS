@@ -42,7 +42,7 @@ export default function Quiz() {
             <ul>
               {typeof quizzes != 'string' && quizzes.length > 0 ?
                 quizzes.map(quiz => {
-                  return <QuizComponent q_id={quiz.q_id} q_topic={quiz.q_topic} q_desc={quiz.q_desc} q_upload_date={quiz.q_upload_date} q_due_date={quiz.q_due_date} q_time={quiz.q_time}/>
+                  return <QuizComponent key={quiz.q_id} q_id={quiz.q_id} q_topic={quiz.q_topic} q_desc={quiz.q_desc} q_upload_date={quiz.q_upload_date} q_due_date={quiz.q_due_date} q_time={quiz.q_time}/>
                 })
                 :
                 'No Quiz!'

@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     const res = await query({
-        query: `insert into quiz_attempt values(?,?,?,?,?);`,
+        query: `insert into quiz_attempt values(?,?,?,?,?,NOW());`,
         values: [s_id,q_id,attempt,marks_obtained,total_marks]
     });
 

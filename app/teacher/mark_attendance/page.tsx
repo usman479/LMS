@@ -12,7 +12,7 @@ interface Attendance {
 }
 
 export default function MarkAttendance() {
-  const [attendance, setAttendance] = useState<Record<string,boolean>>({});
+  const [attendance, setAttendance] = useState<Record<string,boolean|number>>({});
   const searchParams = useSearchParams();
   const [initial, setInitial] = useState(false);
   const [students, setStudents] = useState<Student[]>()
@@ -33,15 +33,15 @@ export default function MarkAttendance() {
   }, [])
 
   
-  const handleStatusChange = (studentId: string, status: boolean) => {
+  const handleStatusChange = (studentId: string, status: boolean|number) => {
     setAttendance((prevAttendance) => ({
       ...prevAttendance,
       [studentId]: status,
     }));
     console.log('asdasd: ',attendance)
   };
-  const handleSelectAll = (selectAll: boolean, caller: boolean) => {
-    const updatedAttendance: Record<string, boolean> = {};
+  const handleSelectAll = (selectAll: boolean, caller: boolean|number) => {
+    const updatedAttendance: Record<string, boolean|number> = {};
 
     students?.forEach((student) => {
       updatedAttendance[student.id] = caller;
@@ -51,6 +51,8 @@ export default function MarkAttendance() {
   };
 
   const handleSubmit = () => {
+    
+    console.log(attendance, 'kese')
     const res = fetch('http://localhost:3000/api/mark_attendance', {
       method: 'POST',
       headers: {

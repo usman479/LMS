@@ -46,7 +46,7 @@ export default function CourseLayout({
         // console.log('saad: ', status);
         if (status === 'authenticated') {
             console.log('saad: ', status);
-            fetch(`http://localhost:3000/api/assignment?course_id=${course_id}&teacher_id=${teacher_id}&student_id=${student_id}`, {
+            fetch(`http://localhost:3000/api/course_name?course_id=${course_id}}`, {
                 method: 'GET',
                 headers: {
                     authorization: `Bearer ${session.user.accessToken}`
@@ -59,13 +59,13 @@ export default function CourseLayout({
     // const {data:session} = useSession();
 
     if (status === 'authenticated' && ourData) {
-        // console.log(ourData)
+        
         return (
             <section>
                 <div className="md:ml-[90px] mx-6 mb-4">
                     <div className="my-4 px-2 pt-2 pb-8 bg-white border-2 shadow-md h-auto flex flex-col items-start">
                         <p className="text-3xl sm:text-4xl ml-4 my-2 font-medium tracking-normal leading-relaxed select-none">
-                            {/* {ourData[0].course_name} */}
+                            {ourData.course_name}
                         </p>
                         <div className="mt-4 ml-4 flex flex-wrap">
                             <div className="py-2 px-4 bg-slate-100 mr-2 mb-2 lg:mb-0 rounded-md">

@@ -26,9 +26,10 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
   const searchParams = useSearchParams();
   const { course_id, teacher_id, student_id } = { course_id: searchParams.get('course_id'), teacher_id: searchParams.get('teacher_id'), student_id: searchParams.get('student_id') };
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [updatedDate,setUpdatedDate] = useState<string>(q_due_date);
   const formRef = useRef<HTMLFormElement>(null);
   let formValues: FormValues;
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formRef.current) {
@@ -37,8 +38,23 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
         formData.entries()
       ) as unknown as FormValues;
 
+      const res = await fetch('http://localhost:3000/api/update_quiz',{
+        method:'PUT',
+        headers:{
+            'Content-Type':'application/json',
+            Accept:'application/json'
+        },
+        body:JSON.stringify({
+            due_date:formValues.dueDate,
+            q_id,
+        })
+    })
+
+    const data = await res.json();
       // Use form values as needed
       console.log(formValues);
+      q_due_date = data.q_due_date
+      setUpdatedDate(q_due_date);
       closeUpdate();
     }
   };
@@ -47,12 +63,6 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
   };
   const closeUpdate = () => {
     setIsUpdateOpen(false);
-  };
-  const formatDateTime = (dateTime: string) => {
-    let dat: string = new Date(dateTime).toString();
-    let dateTimeParts: string[] = dat.split(/[ ]/);
-
-    return `${dateTimeParts[1]} ${dateTimeParts[2]} ${dateTimeParts[3]} ${dateTimeParts[4]}`;
   };
   return (
     <>
@@ -90,12 +100,31 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
                             placeholder=""
                           />
-                          <button
-                            type="submit"
-                            className="text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mt-4 text-center ml-[19.5rem]"
-                          >
-                            Update
-                          </button>
+                          
+                          <div className="flex items-center gap-x-2 lg:justify-end">
+                            <button
+                                type="submit"
+                                className="text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mt-4 text-center"
+                            >
+                                Update
+                            </button>
+                            <button onClick={handleOpenUpdate} className="mt-2.5">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-8 h-8"
+                                >
+                                    <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                    />
+                                </svg>
+                            </button>
+                          </div>
                         </div>
                       </form>
                       </div>
@@ -111,7 +140,7 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                           </TooltipTrigger>
                           <TooltipContent side="top" align="start" className="text-xs lg:text-sm">
                             Upload: {formatDateTime(q_upload_date)} <br />
-                            Due:  {formatDateTime(q_due_date)}
+                            Due:  {formatDateTime(updatedDate)}
                           </TooltipContent>
                         </button>
                         </Tooltip>
@@ -139,7 +168,7 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                 <div className="mt-2">
                   {
                     <Link
-                      href={{ pathname: '/my/attempt', query: { student_id, q_id, course_id } }}
+                      href={{ pathname: '/teacher/attempts', query: { q_id,c_id:course_id } }}
                       className="hover:underline hover:text-gray-600 font-medium flex items-center"
                     >
                      See Attempts
@@ -147,13 +176,13 @@ export default function QuizComponent({ q_id, q_topic, q_desc, q_upload_date, q_
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="currentColor"
                         className="w-5 h-5 ml-2 transition-transform transform-gpu hover:translate-x-1 hover:duration-200"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                         />
                       </svg>

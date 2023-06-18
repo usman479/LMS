@@ -1,7 +1,11 @@
+'use client'
 import { getTeacherCourses } from "@/lib/getData";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { toDateTime } from "@/lib/dateFormatter";
+import { UploadButton } from "@uploadthing/react";
+import { OurFileRouter } from "../../api/uploadthing/core";
+import "@uploadthing/react/styles.css";
 
 type CourseType = {
   course_id: string,
@@ -10,6 +14,11 @@ type CourseType = {
   semester_num: string,
   section: string
 };
+
+type Pdf = {
+  fileUrl: string;
+  fileKey: string;
+}[]
 
 
 export default function TeacherFormComponent({
@@ -23,6 +32,7 @@ export default function TeacherFormComponent({
 
   const { data: session, status } = useSession();
   const [uploading, setUploading] = useState(false);
+  const [pdf,setPdf] = useState<Pdf>([])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setUploading(true);
@@ -49,7 +59,8 @@ export default function TeacherFormComponent({
       body: JSON.stringify({
         topic,
         desc,
-        selectedCourse
+        selectedCourse,
+        fileLink: pdf.length > 0 ?  pdf[0].fileUrl : null,
       })
     })
   }
@@ -65,7 +76,8 @@ export default function TeacherFormComponent({
       topic,
       dueDate,
       desc,
-      selectedCourse
+      selectedCourse,
+      fileLink: pdf.length > 0 ?  pdf[0].fileUrl : null,
     })
   })
   }
@@ -81,7 +93,8 @@ export default function TeacherFormComponent({
       topic,
       link,
       desc,
-      selectedCourse
+      selectedCourse,
+      fileLink: pdf.length > 0 ?  pdf[0].fileUrl : null,
     })
   })
   }
@@ -124,19 +137,38 @@ export default function TeacherFormComponent({
             placeholder=""
           ></textarea>
         </div>
-        <div className={(caller === "quiz" ? `hidden ` : `block `) + `mb-6`}>
+        <div className={(caller === "quiz" ? `hidden ` : `block `) + `mb-6 items-start`}>
           <label
             className="block mb-2 text-base font-medium text-gray-900 dark:text-white"
             htmlFor="user_avatar"
           >
             Any file
           </label>
-          <input
+          {/* <input
             className="block p-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
             aria-describedby="user_avatar_help"
             id="user_avatar"
             type="file"
-          />
+          /> */}
+          <UploadButton<OurFileRouter>
+                endpoint="pdfUploader"
+                onClientUploadComplete={(res) => {
+                    if(res){
+                        setPdf(res);
+                        const json  = JSON.stringify(res);
+                        // Do something with the response
+                        // console.log("Files: ", res);
+                        console.log(json)
+                    }
+                    // alert("Upload Completed");
+                }}
+                onUploadError={(error: Error) => {
+                    // Do something with the error.
+                    alert(`ERROR! ${error.message}`);
+                }}
+                
+            />
+            <p className="flex justify-center items-center" >{pdf.length > 0 ? 'File Uploaded✔': ''}</p>
         </div>
         <div
           className={(caller === "announcement" ? `block ` : `hidden `) + `mb-6`}
@@ -154,6 +186,7 @@ export default function TeacherFormComponent({
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5"
             placeholder=""
           />
+         
         </div>
         <div
           className={(caller === "lecture" || caller === 'announcement' ? `hidden ` : `block `) + `mb-6`}
@@ -217,7 +250,7 @@ export default function TeacherFormComponent({
   }
         </fieldset>
         <button
-          type="submit"
+          // type="butt"
           className="text-white bg-black hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
         >
           {uploading ? 

@@ -20,6 +20,8 @@ type Assign = {
         due_date: string,
         teacher_name: string,
         upload_date: string,
+        file:string,
+        topic:string
     }
 }
 
